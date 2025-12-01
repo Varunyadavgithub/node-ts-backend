@@ -14,5 +14,6 @@
     // Recommended Options
     "strict": true,
     "skipLibCheck": true,
+    "esModuleInterop": true
   }
 }
