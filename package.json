@@ -1,0 +1,30 @@
+{
+  "name": "ts-backend",
+  "version": "1.0.0",
+  "description": "A clean and minimal starter template for building **REST APIs using TypeScript and Node.js**.\r This project provides a solid foundation with a scalable folder structure, type-safety, environment configuration, and ready-to-use Express setup.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "nodemon src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Varunyadavgithub/node-ts-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Varunyadavgithub/node-ts-backend/issues"
+  },
+  "homepage": "https://github.com/Varunyadavgithub/node-ts-backend#readme",
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
