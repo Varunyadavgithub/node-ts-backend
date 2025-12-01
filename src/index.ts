@@ -2,6 +2,7 @@
 import express, { Express, Request, Response } from "express";
 import {config} from "dotenv";
 import cors from "cors";
+import { connectDB } from "./configs/db";
 
 // 2. Initialize the express
 const app: Express = express();
@@ -9,6 +10,9 @@ config();
 
 // 3. Define a port
 const port = process.env.PORT || 8080;
+
+// Connect DB
+connectDB();
 
 // Middlewares
 app.use(cors({
