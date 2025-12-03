@@ -21,6 +21,7 @@ app.use(
     origin: process.env.HOST_URL || "*",
   })
 );
+app.use(express.json())
 
 // APIs
 app.use("/api/v1", routes);
