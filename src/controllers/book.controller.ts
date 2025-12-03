@@ -81,3 +81,27 @@ export const updateBook = async (req: Request, res: Response) => {
       .json({ success: false, message: error.message } as IResponse);
   }
 };
+
+export const deleteBook = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const book = await Book.findByIdAndDelete(id);
+
+    if (!book) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No Book Found." } as IResponse);
+    }
+    
+    return res.status(200).json({
+      success: true,
+      message: "Book deleted successfully.",
+      data: book,
+    } as IResponse);
+  } catch (error: any) {
+    return res
+      .status(500)
+      .json({ success: false, message: error.message } as IResponse);
+  }
+};
