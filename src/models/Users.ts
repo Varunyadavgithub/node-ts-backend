@@ -1,4 +1,4 @@
-import mongoose, { model, mongo, Schema } from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
 
 interface IUser {
   _id?: string;
