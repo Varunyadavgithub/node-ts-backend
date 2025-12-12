@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { IUser, User } from "../models/Users";
+import { IUser, User } from "../models/User";
 import { IResponse } from "./book.controller";
 import bcrypt from "bcrypt";
 import jwt, { Secret } from "jsonwebtoken";

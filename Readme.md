@@ -1,119 +1,222 @@
-# 🚀 TypeScript Node.js API Starter
+# 📚 Node.js + Express + TypeScript — Book Management API
 
-A clean and minimal starter template for building **REST APIs using TypeScript and Node.js**.
-This project provides a solid foundation with a scalable folder structure, type-safety, environment configuration, and ready-to-use Express setup.
+A simple REST API built with **Node.js**, **Express**, and **TypeScript**, following the **MVC architecture**.
+It includes user authentication, JWT-based authorization, role-based permissions, and CRUD operations for books.
 
 ---
 
-## 📁 Project Structure
+## 🚀 Features
+
+* 🔐 **User Authentication (Signup, Login, Logout)**
+* 🛂 **JWT-based Authorization**
+* 🧑‍💼 **Role-Based Access Control (Admin & Creator)**
+* 📚 **Book CRUD Operations**
+* 🗂 **MVC Folder Structure**
+* 🍪 **Cookie-based token handling**
+* 📝 **TypeScript + Express + Mongoose**
+
+---
+
+## 📁 Project Structure (MVC)
 
 ```
 src/
- ├── config/         # Environment & configuration files
- ├── controllers/    # Request handlers
- ├── routes/         # API routes
- ├── middlewares/    # Custom middlewares
- ├── services/       # Business logic
- ├── utils/          # Helper functions
- ├── app.ts          # Express app setup
- └── index.ts        # Entry point
+│── configs/
+│     └── db.ts
+|
+│── controllers/
+│     ├── book.controller.ts
+│     └── user.controller.ts
+|
+│── middlewares/
+│     └── auth.ts
+|
+│── models/
+│     ├── Book.ts
+│     └── User.ts
+│
+│── routes/
+│     ├── auth.routes.ts
+│     └── book.routes.ts
+│
+│── utils/
+│     └── role.ts
+│
+│── index.ts
+|
+.env
+.gitignore
+package.json
+Readme.md
+tsconfig.json
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## 📦 Installation
 
-* **Node.js**
-* **TypeScript**
-* **Express.js**
-* **Nodemon / ts-node-dev**
-* **dotenv**
-
----
-
-## ⚙️ Installation & Setup
-
-### 1️⃣ Clone the repo
-
-```bash
+```sh
 git clone https://github.com/Varunyadavgithub/node-ts-backend.git
-cd backend
-```
-
-### 2️⃣ Install dependencies
-
-```bash
+cd node-ts-backend
 npm install
 ```
 
-### 3️⃣ Create environment file
+---
 
-Create a `.env` file in the root:
+## 🔧 Environment Variables
+
+Create a `.env` file:
 
 ```
-PORT=5000
+PORT = 5000
+HOST_URL = your_frontend_url
+DB_URL = your_mongodb_connection_string
+JWT_SECERET = your_jwt_seceret
 ```
 
-### 4️⃣ Run the development server
+---
 
-```bash
+## ▶️ Running the Server
+
+### Development
+
+```sh
 npm run dev
 ```
 
-### 5️⃣ Build for production
+### Build
 
-```bash
+```sh
 npm run build
 ```
 
-### 6️⃣ Start production server
+### Production
 
-```bash
+```sh
 npm start
 ```
 
 ---
 
-## 📌 Available Scripts
+# 🛣 API Routes
 
-| Script          | Description                              |
-| --------------- | ---------------------------------------- |
-| `npm run dev`   | Runs server in dev mode with auto-reload |
-| `npm run build` | Compiles TypeScript into JavaScript      |
-| `npm start`     | Starts the compiled production server    |
+## 🔑 Authentication Routes (`/api/auth`)
 
----
+### **POST /signup**
 
-## 📡 Example Endpoint
-
-### `GET /api/health`
-
-**Response:**
+Creates a new user.
+Required fields:
 
 ```json
 {
-  "status": "OK",
-  "message": "API is running"
+  "name": "",
+  "email": "",
+  "phone": "",
+  "username": "",
+  "password": "",
+  "role": "admin | creator | user"
+}
+```
+
+### **POST /login**
+
+Returns a JWT token in cookies.
+
+### **GET /logout**
+
+Clears authentication cookie.
+
+---
+
+## 📚 Book Routes (`/api/books`)
+
+> **Protected routes — require login**
+> Only **admin** or **creator** can add/update/delete books.
+
+### **GET /get-books**
+
+Fetch all books.
+
+### **POST /add-book**
+
+```json
+{
+  "name": "",
+  "author": "",
+  "publishYear": "",
+  "description": ""
+}
+```
+
+### **PUT /update-book/:id**
+
+Update book details.
+
+### **DELETE /delete-book/:id**
+
+Delete a book.
+
+---
+
+# 🔐 Authentication & Roles
+
+### Middleware: `verifyToken`
+
+* Extracts JWT from cookies.
+* Sets `req.id` and `req.role`.
+
+### Roles Defined in `/utils/role.ts`
+
+```ts
+export const ROLES = {
+  admin: "admin",
+  creator: "creator",
+  user: "user"
+}
+```
+
+### Route Protection Example
+
+```ts
+if (![ROLES.admin, ROLES.creator].includes(req.role as string)) {
+  return res.status(401).json({
+    success: false,
+    message: "Sorry, you don’t have the required permissions."
+  });
 }
 ```
 
 ---
 
-## 🧩 Future Improvements
+# 🧪 Sample Response Format
 
-* Add database integration (MongoDB / PostgreSQL / MySQL)
-* Add authentication (JWT)
-* Add validation (Zod / Yup / Joi)
-* Write unit tests (Jest)
+```ts
+export interface IResponse {
+  success: boolean;
+  message: string;
+  data?: any;
+}
+```
+
+Example:
+
+```json
+{
+  "success": true,
+  "message": "Book added successfully.",
+  "data": { "name": "Example Book" }
+}
+```
 
 ---
 
-## 🤝 Contributing
+# 🤝 Contributing
 
-Pull requests and improvements are always welcome!
+Pull requests are welcome.
+Open an issue for feature requests or bug reports.
 
 ---
 
-## 📄 License
+# ⭐️ Show Your Support
 
-This project is licensed under the **MIT License**.
+If you like this project, give it a ⭐️ on GitHub!
